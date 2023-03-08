@@ -74,7 +74,7 @@ function Home({ messages }) {
         },
       });
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
 
@@ -83,16 +83,20 @@ function Home({ messages }) {
       <div className={styles.background}>
         <div className={styles.container}>
           <h1 className={styles.title}> AWS Amplify Live Chat</h1>
-          <div className={styles.formContainer}>
+          <div className={styles.chatbox}>
             {stateMessages
               .sort((a, b) => b.createdAt.localeCompare(a.createdAt))
-              .map((message) => (
+              .map((message, index) => (
                 <Message
                   message={message}
+                  user={user}
                   isMe={user.username === message.owner}
-                  key={message.id}
+                  key={index}
                 />
               ))}
+            {console.log(stateMessages)}
+          </div>
+          <div className={styles.formContainer}>
             <form className={styles.formBase} onSubmit={handleSubmit}>
               <input
                 type="text"
@@ -105,9 +109,7 @@ function Home({ messages }) {
                 placeholder="send a message"
                 className={styles.textBox}
               />
-              <button type="submit" style={{ marginLeft: "8px" }}>
-                Send
-              </button>
+              <button style={{ marginLeft: "8px" }}>Send</button>
             </form>
           </div>
         </div>
